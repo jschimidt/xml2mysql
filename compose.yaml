@@ -1,0 +1,9 @@
+services:
+  xml2mysql:
+    build: .
+    image: xml2mysql:0.1.0
+    volumes:
+      - ./data/input:/data/input:ro
+      - ./data/output:/data/output
+      - ./config.yaml:/app/config.yaml:ro
+    command: ["analyze", "--config", "/app/config.yaml"]
