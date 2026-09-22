@@ -12,6 +12,7 @@ import (
 
 	"github.com/jschimidt/xml2mysql/internal/config"
 	"github.com/jschimidt/xml2mysql/internal/schema"
+	"github.com/jschimidt/xml2mysql/internal/xmlsafe"
 )
 
 const batchSize = 1000
@@ -59,7 +60,7 @@ func writeTableDDL(w *bufio.Writer, t schema.TableMapping, engine, charset strin
 
 func writeTableData(w *bufio.Writer, path string, t schema.TableMapping) (int64,error) {
 	f,err:=os.Open(path); if err!=nil{return 0,err}; defer f.Close()
-	d:=xml.NewDecoder(bufio.NewReaderSize(f,1024*1024))
+	d:=xml.NewDecoder(xmlsafe.Reader{R:bufio.NewReaderSize(f,1024*1024)})
 	var batch []row
 	var count int64
 	for {
