@@ -1,17 +1,23 @@
 version: 1
+
 job:
   name: carambei
+
 input:
   directory: /data/input
   pattern: "*.xml"
+
 output:
   directory: /data/output
+
 analysis:
   workers: 2
   sample_limit: 10
   distinct_limit: 100
+
 target:
   database: mysql
   version: "8.4"
+  database_name: carambei_sistema_ids_bkp
   engine: InnoDB
   charset: utf8mb4
